@@ -1,4 +1,4 @@
-package com.example.smaill_project
+package com.examplekh.smaill_project
 
 import io.flutter.embedding.android.FlutterActivity
 
