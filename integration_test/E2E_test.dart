@@ -1,34 +1,47 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-
+import 'integration_tests.dart';
 import 'package:smaill_project/main.dart' as app;
 
-import 'integration_tests.dart';
-
-void main() {
+void main() async {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-  late AddItem addItem;
-  testWidgets('Scroll ListView Test', (WidgetTester tester) async {
-    await tester.pumpWidget(const app.MyApp());
-    addItem = AddItem(tester: tester);
-    addItem.verify();
-    await Future.delayed(const Duration(seconds: 2));
-    await addItem.enterItemName('King Dragon KH');
-    await Future.delayed(const Duration(seconds: 2));
-    await addItem.taplogingButton();
-    await Future.delayed(const Duration(seconds: 2));
-
-    try {
-      expect(find.text('List All Items'), findsOneWidget);
-      final itemFinder = find.text('Item 30');
-      await tester.scrollUntilVisible(
-        itemFinder,
-        100,
+  late IntegrationTest integrationTest;
+  group(
+    "E2E - ",
+    () {
+      testWidgets(
+        'Add Item Flow',
+        (tester) async {
+          await tester.pumpWidget(const app.MyApp());
+          integrationTest = IntegrationTest(tester: tester);
+          await tester.pumpAndSettle();
+          await integrationTest.verify();
+          await Future.delayed(const Duration(seconds: 1));
+          await tester.pumpAndSettle();
+          await integrationTest.findButtonAdd();
+          await Future.delayed(const Duration(seconds: 2));
+          await tester.pumpAndSettle();
+          await integrationTest.enterItemName('Apple');
+          await Future.delayed(const Duration(seconds: 2));
+          await tester.pumpAndSettle();
+          await integrationTest.dropdown();
+          await Future.delayed(const Duration(seconds: 2));
+          await tester.pumpAndSettle();
+          await integrationTest.saveAddItem();
+          await Future.delayed(const Duration(seconds: 2));
+          await tester.pumpAndSettle();
+          await integrationTest.findItemListview();
+          await Future.delayed(const Duration(seconds: 2));
+          await tester.pumpAndSettle();
+          await integrationTest.enterSearchItem('Apple');
+          await Future.delayed(const Duration(seconds: 2));
+          await tester.pumpAndSettle();
+          await integrationTest.savedone();
+          await tester.pumpAndSettle();
+          await Future.delayed(const Duration(seconds: 3));
+        },
       );
-      expect(find.text('Item 30'), findsOneWidget);
-    } catch (error) {
-      print("Couldn't find the expected widget with item more");
-    }
-    await Future.delayed(const Duration(seconds: 2));
-  });
+    },
+  );
 }
+//flutter test integration_test/E2E_test.dart
