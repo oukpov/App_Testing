@@ -1,6 +1,8 @@
 How to use this App
 1.Open app
-2.can add more itemlist, Delete, Updte, search
-3,can scroll view list item and check completed or not
-4,can check list item in table or search
-5,can check graph ,completed and no completed
+2.HomePage
+first time in homescreen, you can scroll item and add item more or update item, delete item, search item , check completed item
+3,TablePage
+you can check item list in table and search item, update item, delete item too, this page like homepage,but just deferrent scroll list and table 
+4, Graph Page
+You can check item of list in graph and check by date,completed and uncompleted
